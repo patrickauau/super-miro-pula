@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dinossauro</title>
+    <style>
+    body, html {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-image: url("super-mario-fr.jpg");
+        background-size: cover;
+    }
+
+    .container {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 2;
+        flex-direction: column;
+        flex-wrap: nowrap;
+    }
+
+    .video-container {
+        flex-wrap: nowrap;
+        position: relative;
+        z-index: 1;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        border: 4px solid #333;
+        background-image: url("background.png");
+        background-position-y: bottom;
+        border-radius: 20px;
+        height: 40vh;
+        width: 40%;
+        margin-bottom: 5%;
+        flex-direction: row;
+        overflow: hidden;
+    }
+
+    .mario-container {
+        position: absolute;
+        left: 20px;
+        bottom: 10px;
+        display: flex;
+        align-items: flex-end;
+    }
+
+    .mario {
+        height: 50px;
+        width: 30px;
+    }
+
+    .chao {
+        height: 10px;
+        width: 100%;
+        background-image: url("ground.png");
+        background-repeat: repeat-x;
+        animation: moveChao 5s linear infinite;
+    }
+
+    @keyframes moveChao {
+        0% {
+            background-position: 0 0;
+        }
+        100% {
+            background-position: -100% 0;
+        }
+    }
+
+    .casco-container {
+        position: absolute;
+        left: -50px;
+        bottom: 8px;
+        display: flex;
+        align-items: flex-end;
+    }
+
+    .casco {
+        height: 30px;
+        width: 30px;
+        animation: moveCasco 3s linear infinite;
+    }
+
+    @keyframes moveCasco {
+        0% {
+            transform: translateX(3000%);
+        }
+        100% {
+            transform: translateX(-50%);
+        }
+    }
+
+    .jump-animation {
+        animation: jump 0.5s forwards;
+    }
+
+    @keyframes jump {
+        0% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(-40px);
+        }
+        100% {
+            transform: translateY(0);
+        }
+    }
+
+    .button-wrapper {
+        width: 20%;
+        height: 200px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 5%;
+    }
+
+    .button-wrapper a {
+        display: block;
+        width: 80%;
+        height: 40px;
+        background-color: #f2f2f2;
+        color: #333;
+        text-align: center;
+        line-height: 40px;
+        text-decoration: none;
+        border-radius: 4px;
+        margin-bottom: 10px;
+    }
+    .button-wrapper a:last-child {
+    margin-bottom: 0;
+}
+
+.hidden {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s, visibility 0s linear 0.5s;
+}
+
+.fade-in {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.5s;
+}
+
+.texto {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 50px;
+            color: white;
+            text-align: center;
+            visibility: visible;
+            transition: opacity 0.5s;
+            opacity: 1;
+        }
+
+        .fade-out {
+            opacity: 0;
+        }
+</style>
+
+<script>
+ document.addEventListener("DOMContentLoaded", function() {
+            const mario = document.querySelector('.mario');
+            const container = document.querySelector('.container');
+            const texto = document.querySelector('.texto');
+
+            function jump() {
+                mario.classList.add('jump-animation');
+                setTimeout(function() {
+                    mario.classList.remove('jump-animation');
+                }, 500);
+            }
+
+            const som = new Audio("level1.mp3");
+            som.loop = true;
+
+            function playSound() {
+                som.play().catch(function(error) {
+                    console.log('Erro ao reproduzir o som:', error);
+                });
+            }
+
+            // Ativar som quando a tela for clicada
+            document.addEventListener('click', function() {
+                playSound();
+                container.classList.add('fade-in');
+                texto.classList.add('fade-out');
+            });
+
+            setTimeout(function() {
+                jump();
+                setInterval(jump, 3000);
+            }, 2500);
+        });
+</script>
+
+</head>
+<body>
+<div class="texto">
+    <h1>TEXTO</h1>
+</div>
+<div class="container hidden">
+  <div class="video-container">
+    <div class="mario-container">
+      <img class="mario" src="mario-running-tiny.gif" alt="Mario">
+    </div>
+    <div class="casco-container">
+      <img src="shell.gif" class="casco" alt="casco">
+    </div>
+    <div class="chao"></div>
+  </div>
+  <audio src="level1.mp3" id="som"></audio>
+  <div class="button-wrapper">
+    <a href="dindex.html">Botão 1</a>
+    <a href="infex.html">Botão 2</a>
+    <a href="intex.html">Botão 3</a>
+    <a href="ondex.html">Botão 4</a>
+    <a href="ingex.html">Botão 5</a>
+  </div>
+</div>
+
+</body>
+</html>
